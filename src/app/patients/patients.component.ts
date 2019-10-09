@@ -1,30 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Patient} from '../@core/model/patient.model';
-import {Chance} from 'chance';
-import {SENSOR_STATUTES, SensorStatus} from '../@core/model/sensor-status.enum';
-import {environment} from '../../environments/environment';
-
-const chance: Chance = new Chance();
+import {PatientService} from '../@core/service/patient.service';
 
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
   styleUrls: ['./patients.component.scss']
 })
-export class PatientsComponent {
+export class PatientsComponent implements OnInit {
 
   public patients: Patient[] = [];
 
-  public constructor() {
-    for (let i = 0; i < environment.patientCount; i++) {
-      this.patients.push(new Patient({
-        id: `${i}`,
-        firstName: chance.first(),
-        lastName: chance.last(),
-        sensorStatus: chance.pickone(SENSOR_STATUTES),
-        createdAt: new Date()
-      }));
-    }
+  public constructor(private patientService: PatientService) {}
+
+  public ngOnInit(): void {
+    this.patients = this.patientService.findAll();
   }
 
   public enableSensor(patient: Patient): void {
