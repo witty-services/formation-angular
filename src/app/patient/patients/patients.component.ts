@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Patient} from '../@core/model/patient.model';
-import {PatientService} from '../@core/service/patient.service';
+import {Patient} from '../../@core/model/patient.model';
+import {PatientService} from '../../@core/service/patient.service';
 import {Observable} from 'rxjs';
 import {shareReplay} from 'rxjs/operators';
 

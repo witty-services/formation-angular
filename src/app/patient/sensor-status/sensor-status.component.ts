@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SENSOR_STATUTES, SensorStatus} from '../@core/model/sensor-status.enum';
+import {SENSOR_STATUTES, SensorStatus} from '../../@core/model/sensor-status.enum';
 
 @Component({
   selector: 'app-sensor-status',

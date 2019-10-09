@@ -9,6 +9,7 @@
     <th>Nom</th>
     <th>Statut du capteur</th>
     <th>Créé le</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -20,13 +21,14 @@
         <app-sensor-status [(status)]="patient.sensor.status" (enable)="enableSensor(patient)" (disable)="disableSensor(patient)"></app-sensor-status>
       </td>
       <td>{{ patient.createdAt|date:'short'}}</td>
+      <td><a [routerLink]="['/', 'patients', patient.id]">Consulter</a></td>
     </tr>
     <tr *ngIf="patients.length === 0">
       <td colspan="4">Aucun patient</td>
     </tr>
   </ng-container>
   <ng-template #loading>
-    <tr><td colspan="4">Chargement des patients en cours, veuillez patienter.</td></tr>
+    <tr><td colspan="5">Chargement des patients en cours, veuillez patienter.</td></tr>
   </ng-template>
   </tbody>
 </table>

@@ -24,6 +24,17 @@ export class PatientService {
     );
   }
 
+  public findById(id: string): Observable<Patient> {
+    return this.http.get(`api/patients/${id}`).pipe(
+      map((data: any) => new Patient(data)),
+      mergeMap((patient: Patient) => this.http.get(`api/sensors/${patient.sensorId}`).pipe(
+        map((data: any) => new Sensor(data)),
+        tap((sensor: Sensor) => patient.sensor = sensor),
+        map(() => patient),
+      ))
+    );
+  }
+
   public updateSensor(sensor: Sensor): Observable<void> {
     return this.http.put(
       `api/sensors`,
