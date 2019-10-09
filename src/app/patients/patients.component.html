@@ -1,0 +1,27 @@
+<h2>Liste des patients</h2>
+
+<p>Nombre de patients : {{ patients.length }}</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prénom</th>
+      <th>Nom</th>
+      <th>Statut du capteur</th>
+      <th>Créé le</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let patient of patients" [ngClass]="{'sensor-enabled': patient.sensorIsEnabled(), 'sensor-disabled': patient.sensorIsDisabled()}">
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.lastName }}</td>
+      <td>
+        <app-sensor-status [(status)]="patient.sensorStatus" (enable)="enableSensor(patient)" (disable)="disableSensor(patient)"></app-sensor-status>
+      </td>
+      <td>{{ patient.createdAt|date:'short'}}</td>
+    </tr>
+    <tr *ngIf="patients.length === 0">
+      <td colspan="4">Aucun patient</td>
+    </tr>
+  </tbody>
+</table>

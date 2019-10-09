@@ -1,0 +1,24 @@
+$sensor-status-enabled-background-color: rgb(0, 225, 0, 0.4);
+$sensor-status-disabled-background-color: rgb(255, 0, 0, 0.4);
+
+table {
+  width: 100%;
+  border: solid black 1px;
+  border-collapse: collapse;
+
+  tr {
+
+    &.sensor-enabled {
+      background-color: $sensor-status-enabled-background-color;
+    }
+
+    &.sensor-disabled {
+      background-color: $sensor-status-disabled-background-color;
+    }
+
+    td, th {
+      border: solid black 1px;
+      padding: 10px;
+    }
+  }
+}
