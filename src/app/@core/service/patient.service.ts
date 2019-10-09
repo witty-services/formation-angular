@@ -1,28 +1,38 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Patient} from '../model/patient.model';
-import {SENSOR_STATUTES, SensorStatus} from '../model/sensor-status.enum';
-import {Chance} from 'chance';
-
-const chance: Chance = new Chance();
+import {forkJoin, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {map, mergeMap, tap, toArray} from 'rxjs/operators';
+import {Sensor} from '../model/sensor.model';
 
 @Injectable()
 export class PatientService {
 
-  private patients: Patient[] = [];
+  public constructor(private http: HttpClient) { }
 
-  public constructor(@Inject('patientCount') patientCount: number) {
-    for (let i = 0; i < patientCount; i++) {
-      this.patients.push(new Patient({
-        id: `${i}`,
-        firstName: chance.first(),
-        lastName: chance.last(),
-        sensorStatus: chance.pickone(SENSOR_STATUTES),
-        createdAt: new Date()
-      }));
-    }
+  public findAll(): Observable<Patient[]> {
+    return this.http.get('api/patients').pipe(
+      mergeMap((data: any[]) => data),
+      map((data: any) => new Patient(data)),
+      map((patient: Patient) => this.http.get(`api/sensors/${patient.sensorId}`).pipe(
+        map((data: any) => new Sensor(data)),
+        tap((sensor: Sensor) => patient.sensor = sensor),
+        map(() => patient),
+      )),
+      toArray(),
+      mergeMap((obs$: Observable<Patient>[]) => forkJoin(obs$))
+    );
   }
 
-  public findAll(): Patient[] {
-    return this.patients;
+  public updateSensor(sensor: Sensor): Observable<void> {
+    return this.http.put(
+      `api/sensors`,
+      {
+        id: sensor.id,
+        status: sensor.status
+      }
+    ).pipe(
+      map(() => void 0)
+    );
   }
 }

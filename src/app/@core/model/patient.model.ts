@@ -1,4 +1,4 @@
-import {SensorStatus} from './sensor-status.enum';
+import {Sensor} from './sensor.model';
 
 export class Patient {
 
@@ -8,7 +8,9 @@ export class Patient {
 
   public lastName: string;
 
-  public sensorStatus: SensorStatus;
+  public sensorId: string;
+
+  public sensor: Sensor;
 
   public createdAt: Date;
 
@@ -18,13 +20,5 @@ export class Patient {
 
   public get displayName(): string {
     return `${this.firstName} ${this.lastName}`;
-  }
-
-  public sensorIsEnabled(): boolean {
-    return this.sensorStatus === SensorStatus.ENABLED;
-  }
-
-  public sensorIsDisabled(): boolean {
-    return this.sensorStatus === SensorStatus.DISABLED;
   }
 }

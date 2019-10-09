@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  patientCount: 10
+  patientCount: 10,
+  apiUrl: 'api/'
 };
 
 /*
