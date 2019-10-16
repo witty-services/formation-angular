@@ -1,0 +1,14 @@
+form {
+
+  > * {
+    display: block;
+  }
+
+  > label, button {
+    margin-top: 10px;
+  }
+
+  > span {
+    color: red;
+  }
+}

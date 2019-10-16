@@ -1,6 +1,17 @@
 <ng-container *ngIf="patient$|async as patient else loading">
-  <h2>{{ patient.displayName }}</h2>
-  <div>Etat du capteur : {{ patient.sensor.status }}</div>
+  <h2>Fiche patient</h2>
+
+  <form #patientForm="ngForm" (ngSubmit)="onSubmit(patient)">
+    <label for="firstName">Prénom</label>
+    <input type="text" [(ngModel)]="patient.firstName" name="firstName" id="firstName" #firstName="ngModel" required/>
+    <span *ngIf="firstName.errors?.required">Le prénom est obligatoire</span>
+
+    <label for="lastName">Nom</label>
+    <input type="text" [(ngModel)]="patient.lastName" name="lastName" id="lastName" #lastName="ngModel" required/>
+    <span *ngIf="lastName.errors?.required">Le nom est obligatoire</span>
+
+    <button type="submit" [disabled]="patientForm.invalid">Valider</button>
+  </form>
 </ng-container>
 
 <ng-template #loading>

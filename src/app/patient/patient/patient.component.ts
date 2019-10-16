@@ -27,4 +27,10 @@ export class PatientComponent implements OnInit {
       ))
     );
   }
+
+  public onSubmit(patient: Patient): void {
+    this.patientService.update(patient).subscribe(
+      () => this.router.navigate(['/', 'patients'])
+    );
+  }
 }

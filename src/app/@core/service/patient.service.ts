@@ -46,4 +46,23 @@ export class PatientService {
       map(() => void 0)
     );
   }
+
+  public update(patient: Patient): Observable<void> {
+    return this.http.put(`api/patients`,
+      {
+        id: patient.id,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
+        sensorId: patient.sensorId,
+        createdAt: patient.createdAt,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).pipe(
+      map(() => void 0)
+    );
+  }
 }
